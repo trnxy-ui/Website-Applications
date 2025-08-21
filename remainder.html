@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="Styles/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="Styles/page_colors.css">
+  <script src="scripts/script.js"></script>
+  <title>Reminders</title>
+</head>
+<body>
+  
+  <!--Header-->
+  <header>
+    <span class="fas fa-calendar"></span>
+    <div>31 July</div>
+  <!--</div>-->
+  </header>
+  
+  <!--Main Body-->
+  <main>
+    <div class="create-wrapper hidden">
+    <form name="create" class="create-reminder">
+      <div class="create-header">create a reminder</div>
+      <label for="create-reminder-title">title</label>
+      <input id="create-reminder-title" name="title" class="form" type="text">
+      <label for="create-reminder-detail">detail</label>
+      <textarea id="create-reminder-detail" name="detail" class="form" rows="4"="10" type="text"></textarea>
+      <span>priority</span><br><br>
+      <input type="radio" id="high" name="priority" value="high">
+      <label for="high">high</label>
+      <input type="radio" id="low" name="priority" value="low">
+      <label for="low">low</label>
+      <div class="create-footer">
+        <input class="create-footer-button" id="save" type="button" value="save">
+        <input class="create-footer-button" id="close-create" type="button" value="close">
+        <input type="text" name="completed" hidden value="false">
+        <br><br>
+      </div>
+    </form>
+    </div>
+
+    <!--List of remainders-->
+    <ul class="reminders">
+    </ul>
+
+
+  </main>
+      <button id="show-create" class="fas fa-plus add-reminder"></button>
+  <!--Footer-->
+  <footer>
+    <button class="fas fa-times">
+    <button class="fas fa-check"></button>
+  </footer>
+  
+</body>
+
+
+<script>
+  let remindersInfo ={ "reminders":[
+    {"title":"Don't foget the report book",
+    "detail":"The reportbook is needed tommorow.",
+    "priority":"high",
+    "completed":false,},
+    ],
+  };
+  
+    let closeCreate = document.querySelector("#close-create");
+    let showCreate = document.querySelector("#show-create");
+    
+    let storedReminders = localStorage.getItem("remindersInfo");
+    if(storedReminders){
+      remindersInfo = JSON.parse(storedReminders);
+    }else{
+      localStorage.setItem("remindersInfo",JSON.stringify(remindersInfo))
+    } //took a time out here
+
+
+    let remindersDom = document.querySelector(".reminders");
+ remindersInfo.reminders.forEach((reminder)=>{
+  remindersDom.innerHTML += '<li class="reminder"><input class="reminder-checkbox" type="checkbox"><div class="reminder-info"><h2 class="reminder-head">'+reminder.title+'</h2><div class="reminder-detail">'+reminder.detail+'</div></div></li>'
+ })
+ closeCreate.addEventListener("click",()=>{
+  let create = document.querySelector(".create-wrapper")
+  create.classList.add("hidden");
+ });
+ showCreate.addEventListener("click",()=>{
+   let create = document.querySelector(".create-wrapper")
+   create.classList.remove("hidden");
+   
+ })
+ let form = document.forms["create"]
+ let save = document.querySelector("#save")
+ 
+ save.addEventListener("click",()=>{
+  let form = document.forms["create"]
+ form = new FormData(form);
+ let formJson={}
+ form.forEach((value, key)=>{
+  formJson[key]=value
+ })
+ storedReminders.add(formJson);
+ localStorage.setItem("remindersInfo",JSON.stringify(storedReminders))
+ remindersInfo.reminders.forEach((reminder)=>{
+  remindersDom.innerHTML += '<li class="reminder"><input class="reminder-checkbox" type="checkbox"><div class="reminder-info"><h2 class="reminder-head">'+reminder.title+'</h2><div class="reminder-detail">'+reminder.detail+'</div></div></li>'
+ })
+ }); 
+</script>
+
+
+</html>

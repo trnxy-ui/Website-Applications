@@ -1,0 +1,23 @@
+:root{
+--dark-violet: #a200d0;
+--indigo: #611186;
+--amaranth-purple: #a9004f;
+--navy-blue: #1a0065;
+--fandango: #ab0e86;
+--indigo-2: #661089;
+
+}
+body{
+
+    height: 100vh;
+    background: linear-gradient(
+        135deg,
+        var(--dark-violet),
+        var(--indigo),
+        var(--amaranth-purple),
+        var(--navy-blue),
+        var(--fandango),
+        var(--indigo-2)    
+        );
+    background-size: cover; 
+}
